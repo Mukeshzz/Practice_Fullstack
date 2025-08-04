@@ -9,8 +9,6 @@ const getTask = async (userId, dispatch) => {
     }
   );
 
-  console.log(res.data.tasks);
-
   dispatch(setTasks(res.data.tasks));
 };
 

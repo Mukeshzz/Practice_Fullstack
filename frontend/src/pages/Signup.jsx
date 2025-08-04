@@ -22,10 +22,9 @@ const Signup = () => {
       "http://localhost:8000/api/v1/todo/signup",
       user
     );
-    console.log("resposne", res);
 
     if (res.data.success) {
-      console.log(res.data.message);
+      alert(res.data.message);
     }
     alert("User registered successfully!!!!");
     setUser({
@@ -69,7 +68,7 @@ const Signup = () => {
         />
         <button type="submit">Register</button>
       </form>
-      <Link to='/'>Alerady have an account. Login Here.</Link>
+      <Link to="/">Alerady have an account. Login Here.</Link>
     </div>
   );
 };

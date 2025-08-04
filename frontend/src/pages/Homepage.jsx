@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/userSlice";
-import { addTasks, reset, update } from "../redux/taskSlice.js";
+import { addTasks, deleteTask, reset, update } from "../redux/taskSlice.js";
 import getTask from "../utils/getTask.js";
 
 function Homepage() {
@@ -40,9 +40,6 @@ function Homepage() {
         }
       );
 
-      console.log("Response 1", res.data);
-
-      console.log("Response", res.data.task);
       dispatch(addTasks(res.data.task));
       setTask({
         name: "",
@@ -66,7 +63,6 @@ function Homepage() {
   const handleEdit = (id) => {
     setEdit(true);
     const editTask = tasks.filter((task) => task._id === id);
-    console.log("Tasks", tasks);
 
     setTask(editTask[0]);
   };
@@ -78,9 +74,8 @@ function Homepage() {
       { withCredentials: true }
     );
 
-    console.log("Updated Task", res.data);
     dispatch(update(task));
-    alert(res.data.message)
+    alert(res.data.message);
     setTask({
       name: "",
       description: "",
@@ -96,12 +91,13 @@ function Homepage() {
       { withCredentials: true }
     );
 
-    const updatedTaskList = taskList.filter((task) => task._id !== id);
-    setTaskList(updatedTaskList);
+    const task = tasks.filter((task) => task._id === id);
+
+    dispatch(deleteTask(task[0]));
   };
 
   const handleCheckbox = async (id) => {
-    const selectedTask = taskList.find((task) => task._id === id);
+    const selectedTask = tasks.find((task) => task._id === id);
     const updatedStatus = !selectedTask.status;
     try {
       const res = await axios.put(
@@ -109,11 +105,7 @@ function Homepage() {
         { status: updatedStatus },
         { withCredentials: true }
       );
-      setTaskList((prev) =>
-        prev.map((task) =>
-          task._id === id ? { ...task, status: updatedStatus } : task
-        )
-      );
+      dispatch(update(res.data.updatedTask));
     } catch (error) {
       console.log("Error:", error);
     }

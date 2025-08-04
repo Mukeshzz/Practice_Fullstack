@@ -25,8 +25,6 @@ const Login = () => {
         }
         dispatch(login(res.data.user));
       } catch (error) {
-        console.log("Login", error);
-
         dispatch(login());
       }
     };
