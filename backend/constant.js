@@ -1,0 +1,1 @@
+export const DB_NAME = 'To_Do_App'
