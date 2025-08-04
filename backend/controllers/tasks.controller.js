@@ -32,26 +32,6 @@ export const addTask = async (req, res) => {
   }
 };
 
-export const tasks = async (req, res) => {
-  try {
-    const tasks = await Tasks.find().populate("user");
-    if (!tasks) {
-      return res.status(400).json({
-        message: "No data available",
-        success: false,
-      });
-    }
-
-    return res.status(200).json({
-      message: "Data fetched successfully",
-      tasks,
-      success: true,
-    });
-  } catch (error) {
-    console.log("Error getting tasks", error);
-  }
-};
-
 export const getTaskById = async (req, res) => {
   try {
     const { id } = req.params;
