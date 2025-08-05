@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { Eye } from "lucide-react";
+import { EyeOff } from "lucide-react";
 
 const Signup = () => {
   const navigate = useNavigate();
 
+  const [show, setShow] = useState(false);
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -55,11 +58,14 @@ const Signup = () => {
         />
         <label htmlFor="">Password</label>
         <input
-          type="password"
+          type={show ? "text" : "password"}
           name="password"
           value={user.password}
           onChange={handleChange}
         />
+        <button type="button" onClick={() => setShow(!show)}>
+          {show ? <Eye /> : <EyeOff />}
+        </button>
         <label htmlFor="">Confirm Password</label>
         <input
           type="password"
